@@ -34,21 +34,19 @@ int main ()
   // We use chrono::duration<double>::count(), which by default returns duration in seconds
   double duration_seconds = std::chrono::duration<double>(t2 - t1).count();
 
-  // ...
-
   // Start measuring time
-  auto t1_anal = std::chrono::high_resolution_clock::now();
+  auto t1_analy = std::chrono::high_resolution_clock::now();
 
   std::vector<double> u = num(n_steps, 0);
 
     // Stop measuring time
-  auto t2_anal = std::chrono::high_resolution_clock::now();
+  auto t2_analy = std::chrono::high_resolution_clock::now();
 
   // Calculate the elapsed time
   // We use chrono::duration<double>::count(), which by default returns duration in seconds
-  double duration_seconds_anal = std::chrono::duration<double>(t2_anal - t1_anal).count();
+  double duration_seconds_analy = std::chrono::duration<double>(t2_analy - t1_analy).count();
     printf("hard time = %lf\n", duration_seconds);
-    printf("easy time = %lf\n", duration_seconds_anal);
+    printf("easy time = %lf\n", duration_seconds_analy);
 
   return 0;
 
