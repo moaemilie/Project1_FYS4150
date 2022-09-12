@@ -1,19 +1,23 @@
-#include "Task7.hpp"
-#include "Task9.hpp"
+/**
+Purpose: Meassuring the time difference between the two implementations of the code to solve the Poisson equation
+@author Nora Helgeland and Emilie Giltvedt Langeland
+*/
+
+#include "Task7_1.hpp"
+#include "Task9_1.hpp"
 #include <iostream>
 #include <algorithm>
 #include <vector>
 #include <stdio.h>
-
-
-
 #include <chrono>
+
 
 int main ()
 {
-
+    // Set number of steps
     double n_steps = 1000000; 
-    std::vector<double> a(n_steps, -1); //Finne ut av senere
+    // Define vectors for a, b and c
+    std::vector<double> a(n_steps, -1); 
     std::vector<double> b(n_steps, 2);
     std::vector<double> c(n_steps, -1);
 
@@ -21,7 +25,7 @@ int main ()
   auto t1 = std::chrono::high_resolution_clock::now();
 
     
-    std::vector<double> v = num(n_steps, a, b, c, 0);  
+    std::vector<double> v = numSpecial(n_steps, a, b, c, 0);  
 
   // Stop measuring time
   auto t2 = std::chrono::high_resolution_clock::now();
@@ -35,7 +39,7 @@ int main ()
   // Start measuring time
   auto t1_anal = std::chrono::high_resolution_clock::now();
 
-  std::vector<double> u = numSpecial(n_steps, 0);
+  std::vector<double> u = num(n_steps, 0);
 
     // Stop measuring time
   auto t2_anal = std::chrono::high_resolution_clock::now();

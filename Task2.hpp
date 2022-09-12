@@ -1,3 +1,8 @@
+/**
+Purpose: Returns a vector which is the the analytcal solution to the Poisson equation.
+@author Nora Helgeland and Emilie Giltvedt Langeland
+*/
+
 #include <vector>
 #include <math.h>
 #include <iostream>
@@ -5,33 +10,37 @@
 #include <fstream>
 #include <iomanip>
 
+//Declarations
+double function1(double x); 
+std::vector<double> analy(double n_steps, int file); 
 
-double function1(double x); //Declaration
-
-std::vector<double> analy(double n_steps, int file); //Declaration
-
+// Main function that returns a vector with u(x) values for n_steps, 
+// and creates a file with the values.
 std::vector<double> analy(double n_steps, int file) {
 
-    // double n_steps = 10;
+    // Define step size
     double step_size = 1/n_steps;
 
-    // Create a vector<double> of length 11 with x-es
+    // Create a vector<double> with the x-es
     std::vector<double> x(n_steps + 1);
     
-    // Create a vector<double> of length 11 with u(x)-es
+    // Create a vector<double> with u(x)-es
     std::vector<double> u(n_steps + 1);
 
+    // Loop over every step (except first and last) and calculate the u(x)
     for (size_t i = 0; i < x.size(); i++){
      x[i] = step_size*i;
      u[i] = function1(step_size*i);
      }
 
+    // Define the boundary points 
      u[0] = 0;
      u[n_steps] = 0;
 
+    // If input equals one, a file is created.
     if(file == 1){
         // Set a filename
-        std::string filename = "output10Rel.txt";
+        std::string filename = "output1000Rel.txt";
 
         // Create and open the output file. Or, technically, create 
         // an "output file stream" (type std::ofstream) and connect 
@@ -57,7 +66,7 @@ std::vector<double> analy(double n_steps, int file) {
 
     }
 
-
+// Return the analytical solution u(x)
 double function1(double x){
     //Provide definition of function here:
     return 1 - (1-exp(-10))*x - exp(-10*x);
