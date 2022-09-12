@@ -47,7 +47,7 @@ int main() {
     ofile << std::setw(width) << std::setprecision(prec) << std::scientific << max_rel_error[i]
             << std::endl;
     }  
-    ofile.close(); */
+    ofile.close(); 
 
     return 0;
 }
