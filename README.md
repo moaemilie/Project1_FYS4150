@@ -15,6 +15,7 @@
   
 - To run the functions in Task2.hpp and Task7_1.cpp one has to compile and rund Task8.cpp. For the solutions to be written to files the parameter "file" 
   has to be equal to one. They can also be run by compiling and running Task.cpp.
+- To obtain our solutions one has to change the parameter n_steps and make sure that all the solutions get written to file, also in the header files. For     Task8.cpp n_steps = 10, 100, 1000, 10000 and for Task10.cpp n_steps = 10^1,...,10^6
   
   
   
