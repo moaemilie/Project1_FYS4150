@@ -40,7 +40,7 @@ std::vector<double> analy(double n_steps, int file) {
     // If input equals one, a file is created.
     if(file == 1){
         // Set a filename
-        std::string filename = "output1000Rel.txt";
+        std::string filename = "output10Rel.txt";
 
         // Create and open the output file. Or, technically, create 
         // an "output file stream" (type std::ofstream) and connect 

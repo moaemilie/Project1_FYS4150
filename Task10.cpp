@@ -3,8 +3,8 @@ Purpose: Meassuring the time difference between the two implementations of the c
 @author Nora Helgeland and Emilie Giltvedt Langeland
 */
 
-#include "Task7_1.hpp"
-#include "Task9_1.hpp"
+#include "Task7.hpp"
+#include "Task9.hpp"
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -25,7 +25,7 @@ int main ()
   auto t1 = std::chrono::high_resolution_clock::now();
 
     
-    std::vector<double> v = numSpecial(n_steps, a, b, c, 0);  
+    std::vector<double> v = num(n_steps, a, b, c, 0);  
 
   // Stop measuring time
   auto t2 = std::chrono::high_resolution_clock::now();
@@ -37,7 +37,7 @@ int main ()
   // Start measuring time
   auto t1_analy = std::chrono::high_resolution_clock::now();
 
-  std::vector<double> u = num(n_steps, 0);
+  std::vector<double> u = numSpecial(n_steps, 0);
 
     // Stop measuring time
   auto t2_analy = std::chrono::high_resolution_clock::now();

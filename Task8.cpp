@@ -3,7 +3,7 @@ Purpose: Calculation the absolute and relative error between the numerical and a
 @author Nora Helgeland and Emilie Giltvedt Langeland
 */
 
-#include "Task7_1.hpp"
+#include "Task7.hpp"
 #include "Task2.hpp"
 #include <iostream>
 #include <algorithm>
@@ -17,12 +17,17 @@ double max(int i, std::vector<double> a, std::vector<double> b, std::vector<doub
 
 int main() {
     // Define number of steps
-    double n_steps = 1000; 
+    double n_steps = 10; 
 
+    // Define vectors for a, b and c
+    std::vector<double> a(n_steps, -1); 
+    std::vector<double> b(n_steps, 2);
+    std::vector<double> c(n_steps, -1);
+
+    // Use functions to find u(x) and v(x)
     std::vector<double> u = analy(n_steps, 1);
-    std::vector<double> v = num(n_steps, 1);
+    std::vector<double> v = num(n_steps, a, b, c, 1);
 
- 
     // Absolute error:
     std::vector<double> abs_error = Absolute_error(u, v, n_steps, 1);
 
@@ -33,7 +38,7 @@ int main() {
     // Absolute max error
     std::vector<double> max_rel_error(7);
     
-    for (int i = 1; i <= 7; i++){
+    for (double i = 1; i <= 7; i++){
         max_rel_error[i-1] = max(i, a, b, c);
     }
 
@@ -58,8 +63,8 @@ int main() {
 // Calculates the relative error between two vectors, and returns the maximal eliment. This doesnt work.
 double max(int power, std::vector<double> a, std::vector<double> b, std::vector<double> c){
     std::vector<double> u = analy(pow(10,power), 0);
-    std::vector<double> v1 = num(pow(10,power), 0);
-    std::vector<double> rel_error = Relative_error(u, v1, power, 0);
+    std::vector<double> v = num(pow(10,power), a, b, c, 0);
+    std::vector<double> rel_error = Relative_error(u, v, power, 0);
     return *std::max_element(rel_error.begin(), rel_error.end());
     
 }
@@ -78,7 +83,7 @@ std::vector<double> Absolute_error(std::vector<double> u, std::vector<double> v,
 
     // Creates file with absolute error
     if(file == 1){
-        std::string filename = "AbsError1000.txt";
+        std::string filename = "AbsError10.txt";
         std::ofstream ofile;
         ofile.open(filename);
         int width = 12;
@@ -112,7 +117,7 @@ std::vector<double> Relative_error(std::vector<double> u, std::vector<double> v,
     
     // Creates file with absolute error
     if(file == 1){
-        std::string filename2 = "RelError1000.txt";
+        std::string filename2 = "RelError10.txt";
         std::ofstream ofile2;
         ofile2.open(filename2);
         int width = 12;

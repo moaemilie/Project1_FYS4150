@@ -10,15 +10,19 @@ Purpose: Returns a vector which is the the numerical solution to the Poisson equ
 #include <fstream>
 #include <iomanip>
 
-//Declarations
-double function(double g_tilde, double v_next, double c, double b_tilde); 
-double f(double x); 
-std::vector<double> numSpecial(double n_steps, std::vector<double> a, std::vector<double> b, std::vector<double> c, int file); 
+//Declaration
+double function_num(double g_tilde, double v_next, double c, double b_tilde); 
+double f_num(double x); 
+std::vector<double> numSpecial(double n_steps, int file); 
 
 // Main function that returns a vector with v(x) values for n_steps, 
 // and creates a file with the values.
-std::vector<double> numSpecial(double n_steps, std::vector<double> a, std::vector<double> b, std::vector<double> c, int file) {
-    
+std::vector<double> numSpecial(double n_steps, int file) {
+    // Defines the a, b, c that is used in the formula.
+    double a = -1;
+    double b = 2;
+    double c = -1;
+
     // Define the step size
     double step_size = 1/n_steps;
 
@@ -31,12 +35,13 @@ std::vector<double> numSpecial(double n_steps, std::vector<double> a, std::vecto
     std::vector<double> b_tilde(n_steps-1);
 
     // Calculate the first values of b_tilde and g_tilde
-    g_tilde[0] = f(step_size)*(pow(step_size,2));
+    g_tilde[0] = f_num(step_size)*(pow(step_size,2));
     b_tilde[0] = 2;
 
+    // Loop over every step to find the corrresponding g_tilde and b_tilde
     for(double i = 1; i < (n_steps); i++){
-        g_tilde[i] = f(step_size*i)*(pow(step_size,2))-(a[i]/b_tilde[i-1])*g_tilde[i-1];
-        b_tilde[i] = b[i] - (a[i]/b_tilde[i-1])*c[i-1];
+        g_tilde[i] = f_num(step_size*i)*(pow(step_size,2))-(a/b_tilde[i-1])*g_tilde[i-1];
+        b_tilde[i] = b - (a/b_tilde[i-1])*c;
     }
 
     // Define boundary points
@@ -45,18 +50,21 @@ std::vector<double> numSpecial(double n_steps, std::vector<double> a, std::vecto
     v[0] = 0;
     x[0] = 0;
 
-    // Loop over every step to calculate v(i)
+    // Loop over every step to calculate v(x)
     for(double i = (n_steps-1); i >= 1; i--){
 
         x[i] = i*step_size;
-        v[i] = function(g_tilde[i-1], v[i+1], c[i], b_tilde[i-1]);
+
+        v[i] = function_num(g_tilde[i-1], v[i+1], c, b_tilde[i-1]);
     }
-    
-    
     // If input equals one, a file is created.
     if(file == 1){
- 
+        // Set a filename
         std::string filename = "output10Num.txt";
+
+        // Create and open the output file. Or, technically, create 
+        // an "output file stream" (type std::ofstream) and connect 
+        // it to our filename.
         std::ofstream ofile;
         ofile.open(filename);
 
@@ -80,15 +88,14 @@ std::vector<double> numSpecial(double n_steps, std::vector<double> a, std::vecto
 
 }
 
-
 // Returns v(x)
-double function(double g_tilde, double v_next, double c, double b_tilde){
-    //Provide definition of function here:
-    return (g_tilde - c*v_next)/b_tilde;
-}
+ double function_num(double g_tilde, double v_next, double c, double b_tilde){
+     //Provide definition of function here:
+     return (g_tilde + v_next)/b_tilde;
+    }
 
 // Returns f(x)
-double f(double x){
-    //Provide definition of function here:
-    return 100*exp(-10*x);
-}
+ double f_num(double x){
+     //Provide definition of function here:
+     return 100*exp(-10*x); 
+ }
